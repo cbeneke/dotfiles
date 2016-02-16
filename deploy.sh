@@ -5,15 +5,16 @@ path=$(pwd)
 
 # Update symlinks in home
 for link in `ls | grep -vE "README\.md|deploy\.sh"`; do
-    if [ -n "$verbose" ]; then
-    echo "$link"
-        echo "  removing ~/.$link"
-    fi
-    rm -r ~/.$link
+  [ "x$verbose" == 'x' ] || echo "> ${link}"
 
-    if [ -n "$verbose" ]; then
-        echo "  creating new symlink: $path/$link -> ~/.$link"
-    fi
-    ln -s $path/$link ~/.$link
+  [ "x$verbose" == 'x' ] echo "  removing ~/.${link}"
+  rm ~/.${link}
+
+  [ "x$verbose" == 'x' ] || echo "  creating new symlink: ${path}/${link} -> ~/.${link}"
+  ln -s ${path}/${link} ~/.${link}
+
 done
+
 [ -z "$verbose" ] && echo "Files deployed"
+
+# vim:set et ts=2 sw=2 sts=2:
