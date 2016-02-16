@@ -5,8 +5,8 @@ Add the following script to your git hooks to run the deploy script automaticall
 the dotfiles:
 
 'GIT_DIR/hooks/post-merge'
-    #!/bin/bash
 
+    #!/bin/bash
     # update local symlinks
     echo "Running Deploy Script:"
     exec $PWD/deploy.sh
