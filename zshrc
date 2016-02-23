@@ -38,8 +38,10 @@ export PATH
 
 hascmd dircolors && eval $(dircolors -b) # color setup for ls
 
-# use vim or vi as EDITOR
-if hascmd vim ; then
+# which version of vi to use
+if hascmd nvim; then
+    export EDITOR=${EDITOR:-nvim}
+elif hascmd vim ; then
     export EDITOR=${EDITOR:-vim}
 else
     export EDITOR=${EDITOR:-vi}
