@@ -8,11 +8,11 @@ for link in `ls | grep -vE "README\.md|deploy\.sh|config"`; do
   [ "x$verbose" == 'x' ] || echo "> ${link}"
 
   # remove symlink if exists
-  if [ -e ~/.${link} ]; then 
+  if [ -h ~/.${link} ]; then 
     [ "x$verbose" == 'x' ] || echo "  removing ~/.${link}"
-    if [ -h ~/.${link} ]; then
-      rm ~/.${link}
-    else
+    rm ~/.${link}
+  else
+    if [ -e ~/.${link} ]; then
       echo "~/.${link} exists and is not an symlink!"
       exit 1
     fi
@@ -25,12 +25,14 @@ done
 for link in `ls config`; do
   [ "x$verbose" == 'x' ] || echo "> ${link}"
 
+  mkdir -p ~/.config
+
   # remove symlink if exists
-  if [ -e ~/.config/${link} ]; then 
+  if [ -h ~/.config/${link} ]; then 
     [ "x$verbose" == 'x' ] || echo "  removing ~/.config/${link}"
-    if [ -h ~/.config/${link} ]; then
-      rm ~/.config/${link}
-    else
+    rm ~/.config/${link}
+  else
+    if [ -e ~/.config/${link} ]; then
       echo "~/.config/${link} exists and is not an symlink!"
       exit 1
     fi
