@@ -22,5 +22,6 @@ connman-ui-gtk &
 #owncloud &
 xcompmgr &
 urxvtd -f
+unclutter &
 
 exec awesome > .awesomeErrors
