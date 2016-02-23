@@ -27,6 +27,9 @@ mkcd() {
 #{{{ environment for external tools
 ################################################################################
 
+# set qemu:///system as default connection for virsh
+export LIBVIRT_DEFAULT_URI='qemu:///system'
+
 [ -r ${HOME}/bin ] && PATH="$PATH:${HOME}/bin"
 export PATH
 
