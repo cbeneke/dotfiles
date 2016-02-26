@@ -3,7 +3,7 @@
 # Main function
 main() {
   [ $# -gt 0 ] && [ $1 == "-v" ] && verbose="true" || verbose=""
-  path=$(pwd)
+  path=$( cd $(dirname $0) && pwd)
 
   # Update symlinks in home
   for file in `ls | grep -vE "README\.md|deploy\.sh|config"`; do
@@ -42,7 +42,7 @@ link() {
 }
 
 # run the programm
-main()
+main
 
 
 # vim:set et ts=2 sw=2 sts=2:
