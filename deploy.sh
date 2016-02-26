@@ -33,7 +33,7 @@ link() {
   else
     if [ -e ${name} ]; then
       echo "${name} exists and is not an symlink!"
-      exit 1
+      return
     fi
   fi
 
