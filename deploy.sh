@@ -1,47 +1,48 @@
 #!/bin/bash
 
-[ $# -gt 0 ] && [ $1 == "-v" ] && verbose="true" || verbose=""
-path=$(pwd)
+# Main function
+main() {
+  [ $# -gt 0 ] && [ $1 == "-v" ] && verbose="true" || verbose=""
+  path=$(pwd)
 
-# Update symlinks in home
-for link in `ls | grep -vE "README\.md|deploy\.sh|config"`; do
-  [ "x$verbose" == 'x' ] || echo "> ${link}"
-
-  # remove symlink if exists
-  if [ -h ~/.${link} ]; then 
-    [ "x$verbose" == 'x' ] || echo "  removing ~/.${link}"
-    rm ~/.${link}
-  else
-    if [ -e ~/.${link} ]; then
-      echo "~/.${link} exists and is not an symlink!"
-      exit 1
-    fi
-  fi
-
-  [ "x$verbose" == 'x' ] || echo "  creating new symlink: ${path}/${link} -> ~/.${link}"
-  ln -s ${path}/${link} ~/.${link}
-done
-
-for link in `ls config`; do
-  [ "x$verbose" == 'x' ] || echo "> ${link}"
+  # Update symlinks in home
+  for file in `ls | grep -vE "README\.md|deploy\.sh|config"`; do
+    link ${path}/${file} ~/.${file}
+  done
 
   mkdir -p ~/.config
+  for file in `ls config`; do
+    link ${path}/config/${file} ~/.config/${file}
+  done
+
+  [ -z "$verbose" ] && echo "Files deployed"
+}
+
+# Usage: link target name
+# creates Symlink 'name -> target'
+link() {
+  target=$1
+  name=$2
+
+  [ "x$verbose" == 'x' ] || echo "> ${name}"
 
   # remove symlink if exists
-  if [ -h ~/.config/${link} ]; then 
-    [ "x$verbose" == 'x' ] || echo "  removing ~/.config/${link}"
-    rm ~/.config/${link}
+  if [ -h ${name} ]; then 
+    [ "x$verbose" == 'x' ] || echo "  removing ${name}"
+    rm ${name}
   else
-    if [ -e ~/.config/${link} ]; then
-      echo "~/.config/${link} exists and is not an symlink!"
+    if [ -e ${name} ]; then
+      echo "${name} exists and is not an symlink!"
       exit 1
     fi
   fi
 
-  [ "x$verbose" == 'x' ] || echo "  creating new symlink: ${path}/config/${link} -> ~/.config/${link}"
-  ln -s ${path}/config/${link} ~/.config/${link}
-done
+  [ "x$verbose" == 'x' ] || echo "  creating new symlink: ${name} -> ${target}"
+  ln -s ${target} ${name}
+}
 
-[ -z "$verbose" ] && echo "Files deployed"
+# run the programm
+main()
+
 
 # vim:set et ts=2 sw=2 sts=2:
