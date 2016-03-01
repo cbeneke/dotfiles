@@ -12,13 +12,13 @@ main()
   # Update dotfiles in home
   vprintf ${GREEN} "\ndotfiles in ${path}"
   for file in `ls ${path} | grep -vE "README\.md|deploy\.sh|config"`; do
-    link ${path}/${file} ~/.${file} ${VERBOSE}
+    link ${path}/${file} ${HOME}/.${file} ${VERBOSE}
   done
 
   vprintf ${GREEN} "\ndotfiles ${path}/config"
-  dryrun "mkdir -p ~/.config"
+  dryrun "mkdir -p ${HOME}/.config"
   for file in `ls ${path}/config`; do
-    link ${path}/config/${file} ~/.config/${file} ${VERBOSE}
+    link ${path}/config/${file} ${HOME}/.config/${file} ${VERBOSE}
   done
 
   vprintf ${GREEN} "\n== Files deployed =="
