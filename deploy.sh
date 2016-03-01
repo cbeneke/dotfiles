@@ -10,10 +10,12 @@ main()
   path=$( cd $(dirname $0) && pwd)
 
   # Update dotfiles in home
+  vprintf ${GREEN} "\ndotfiles in ${path}"
   for file in `ls ${path} | grep -vE "README\.md|deploy\.sh|config"`; do
     link ${path}/${file} ~/.${file} ${VERBOSE}
   done
 
+  vprintf ${GREEN} "\ndotfiles ${path}/config"
   dryrun "mkdir -p ~/.config"
   for file in `ls ${path}/config`; do
     link ${path}/config/${file} ~/.config/${file} ${VERBOSE}
