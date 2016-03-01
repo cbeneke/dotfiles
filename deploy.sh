@@ -60,7 +60,11 @@ link()
     fi
 
     vprintf ${NC} "  copying ${name} recursive to ${target}"
-    dryrun "cp -r ${target} ${name}"
+    if [ -d ${target} ]; then
+      dryrun "cp -r ${target} ${name}"
+    else
+      dryrun "cp ${target} ${name}"
+    fi
   fi
 }
 
