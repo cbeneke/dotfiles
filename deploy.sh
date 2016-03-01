@@ -1,45 +1,137 @@
 #!/bin/bash
 
+# global vars
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# may be redefined by readopts
+COLOR=''
+COPY=''
+FORCE=''
+PRETEND=''
+VERBOSE=''
+
 # Main function
-main() {
-  [ $# -gt 0 ] && [ $1 == "-v" ] && verbose="true" || verbose=""
+main()
+{
+  readopts $@
   path=$( cd $(dirname $0) && pwd)
 
   # Update symlinks in home
   for file in `ls ${path} | grep -vE "README\.md|deploy\.sh|config"`; do
-    link ${path}/${file} ~/.${file} ${verbose}
+    link ${path}/${file} ~/.${file} ${VERBOSE}
   done
 
   mkdir -p ~/.config
   for file in `ls ${path}/config`; do
-    link ${path}/config/${file} ~/.config/${file} ${verbose}
+    link ${path}/config/${file} ~/.config/${file} ${VERBOSE}
   done
 
-  [ -z "$verbose" ] && echo "Files deployed"
+  vprintf ${GREEN} "\n== Files deployed =="
 }
 
-# Usage: link target name [verbose]
-# creates Symlink 'name -> target'
-link() {
+# Usage: link target name
+# creates Symlink 'name -> target' or copies file if COPY is not empty
+link()
+{
   target=$1
   name=$2
-  [ $# -gt 2 ] && verbose="true" || verbose=""
 
-  [ "x${verbose}" == 'x' ] || echo "> ${name}"
+  vprintf ${GREEN} "> ${name}"
 
-  # remove symlink if exists
-  if [ -h ${name} ]; then 
-    [ "x${verbose}" == 'x' ] || echo "  removing ${name}"
-    rm ${name}
+  # SYMLINK mode
+  if [ "x${COPY}" == 'x' ]; then
+    # remove symlink if exists
+    if [ "x${FORCE}" != 'x' ] || [ -h ${name} ]; then 
+      vprintf ${NC} "  removing ${name}"
+      dryrun "rm ${name}"
+    else
+      if [ -e ${name} ]; then
+        eprintf "  ${name} exists and is not an symlink!"
+        return
+      fi
+    fi
+
+    vprintf ${NC} "  creating new symlink: ${name} -> ${target}"
+    dryrun "ln -s ${target} ${name}"
   else
+
     if [ -e ${name} ]; then
-      echo "${name} exists and is not an symlink!"
-      return
+      vprintf ${NC} "  removing ${name}"
+      dryrun "rm ${name}"
+    fi
+
+    vprintf ${NC} "  copying ${name} recursive to ${target}"
+    dryrun "cp -r ${target} ${name}"
+  fi
+}
+
+readopts()
+{
+  # initialize variables (again)
+  COLOR='true'
+  COPY=''
+  FORCE=''
+  PRETEND=''
+  VERBOSE=''
+
+  while [ $# -gt 0 ]; do
+    case $1 in
+      -c|--copy)
+        COPY='true'
+        ;;
+      -f|--force)
+        FORCE='true'
+        ;;
+      -p|--pretend)
+        PRETEND='true'
+        VERBOSE='true'
+        ;;
+      -v|--verbose)
+        VERBOSE='true'
+        ;;
+      -x|--no-color)
+        COLOR=''
+        ;;
+      *)
+        eprintf "Unknown option: \'$1\'!"
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
+
+# prints $2 and newline in color $1 if VERBOSE is other than empty
+vprintf()
+{
+  if [ "x${VERBOSE}" != 'x' ]; then
+    if [ "x${COLOR}" == 'x' ]; then
+      printf "$2\n"
+    else
+      printf "${1}$2${NC}\n"
     fi
   fi
+}
 
-  [ "x${verbose}" == 'x' ] || echo "  creating new symlink: ${name} -> ${target}"
-  ln -s ${target} ${name}
+eprintf()
+{
+ if [ "x${COLOR}" == 'x' ]; then
+   printf "EE: $1\n"
+ else
+   printf "${RED}$1${NC}\n"
+ fi
+}
+# run $1 if PRETEND is empty
+dryrun()
+{
+  if [ "x${PRETEND}" == 'x' ]; then
+    $1
+  else
+    vprintf ${YELLOW} "  would run \'$1\'"
+  fi
 }
 
 # run the programm
