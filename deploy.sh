@@ -4,14 +4,17 @@
 main()
 {
   readopts $@
+
+  # check wether script is a symlink and get path
+  [ -h $0 ] && eprintf "This script MUST NOT be a symlink\n" && exit 1
   path=$( cd $(dirname $0) && pwd)
 
-  # Update symlinks in home
+  # Update dotfiles in home
   for file in `ls ${path} | grep -vE "README\.md|deploy\.sh|config"`; do
     link ${path}/${file} ~/.${file} ${VERBOSE}
   done
 
-  mkdir -p ~/.config
+  dryrun "mkdir -p ~/.config"
   for file in `ls ${path}/config`; do
     link ${path}/config/${file} ~/.config/${file} ${VERBOSE}
   done
@@ -47,7 +50,11 @@ link()
 
     if [ -e ${name} ]; then
       vprintf ${NC} "  removing ${name}"
-      dryrun "rm ${name}"
+      if [ -d ${name} ]; then
+        dryrun "rm -r ${name}"
+      else
+        dryrun "rm ${name}"
+      fi
     fi
 
     vprintf ${NC} "  copying ${name} recursive to ${target}"
