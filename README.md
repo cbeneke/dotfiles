@@ -9,5 +9,5 @@ the dotfiles:
     #!/bin/bash
     # update local symlinks
     echo "Running Deploy Script:"
-    exec $PWD/deploy.sh
+    exec $PWD/deploy.sh -x
 
