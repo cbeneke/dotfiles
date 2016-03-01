@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# global vars
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-# may be redefined by readopts
-COLOR=''
-COPY=''
-FORCE=''
-PRETEND=''
-VERBOSE=''
-
 # Main function
 main()
 {
@@ -85,6 +72,10 @@ readopts()
       -f|--force)
         FORCE='true'
         ;;
+      -h|--help)
+        printf "${HELP}\n"
+        exit 0
+        ;;
       -p|--pretend)
         PRETEND='true'
         VERBOSE='true'
@@ -97,6 +88,7 @@ readopts()
         ;;
       *)
         eprintf "Unknown option: \'$1\'!"
+        printf "${HELP}\n"
         exit 1
         ;;
     esac
@@ -116,6 +108,7 @@ vprintf()
   fi
 }
 
+# prints $1 as error message
 eprintf()
 {
  if [ "x${COLOR}" == 'x' ]; then
@@ -124,6 +117,7 @@ eprintf()
    printf "${RED}$1${NC}\n"
  fi
 }
+
 # run $1 if PRETEND is empty
 dryrun()
 {
@@ -133,6 +127,43 @@ dryrun()
     vprintf ${YELLOW} "  would run \'$1\'"
   fi
 }
+
+# global vars
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# may be redefined by readopts
+COLOR=''
+COPY=''
+FORCE=''
+PRETEND=''
+VERBOSE=''
+
+HELP=$( cat <<EOF
+Usage: $0 [OPTIONS]
+
+OPTIONS
+  -h | --help
+    prints this helptext.
+
+  -c | --copy
+    instead of symlinking, copy files.
+
+  -f | --force
+    In symlink mode: remove existing files.
+
+  -p | --pretend
+    do not actually do something, just print actions (enables verbose mode).
+
+  -v | --verbose
+    give more output.
+
+  -x | --no-color
+    disable colorazation of the text.
+EOF
+)
 
 # run the programm
 main $@
