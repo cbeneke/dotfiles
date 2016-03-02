@@ -1,9 +1,6 @@
 syntax on
 filetype on
 
-"enable clipboard
-set clipboard+=unnamedplus
-
 "disable mouse
 set mouse=""
 
