@@ -47,6 +47,9 @@ export PATH
 # export TERM because color abfuck *HACK*
 export TERM='xterm-256color'
 
+# export TERM because color abfuck *HACK*
+export TERM='xterm-256color'
+
 # include the z script
 [ -x ${HOME}/.z.sh ] && . ${HOME}/.z.sh
 
