@@ -44,6 +44,9 @@ export LIBVIRT_DEFAULT_URI='qemu:///system'
 [ -r ${HOME}/bin ] && PATH="${PATH}:${HOME}/bin"
 export PATH
 
+# export TERM because color abfuck *HACK*
+export TERM='xterm-256color'
+
 # include the z script
 [ -x ${HOME}/.z.sh ] && . ${HOME}/.z.sh
 
