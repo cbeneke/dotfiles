@@ -127,7 +127,7 @@ setopt correct              # try to correct typos
 # exit code on the left if != 0, red username for root, green otherwise
 #PROMPT="%(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b $(git_prompt)
 #%(!.#.$) "
-PROMPT="%(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b
+PROMPT="%{%B%F{gray}%}%D{%H:%M}%b %(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b
 %(!.#.$) "
 RPROMPT="%(?..%B%F{red}[%?]%b)"
 
@@ -136,6 +136,11 @@ PS2="%F{green}%_%f> "
 # when debugging with set -x: file in blue, linenum in green
 PS4="+%F{blue}%N%f:%F{green}%i%f> "
 
+TMOUT=30
+
+TRAPALRM() {
+    zle reset-prompt
+}
 
 ################################################################################
 #}}}
