@@ -15,10 +15,6 @@ mkcd() {
     mkdir $1 && cd $1
 }
 
-vactivate() {
-    [ -d $HOME/virtualenvs/$1 ] && source $HOME/virtualenvs/$1/bin/activate || echo "VirtualEnv '$1' not found"
-}
-
 #function git_prompt() {
 #    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref=$(git rev-parse --short HEAD 2>/dev/null)
 #    if [[ -n "$ref" ]]; then
@@ -31,14 +27,21 @@ vactivate() {
 #{{{ environment for external tools
 ################################################################################
 
+# include virtualenvwrapper
+[ -z ${VIRTUALENVSH} ] && export VIRTUALENVSH='/usr/bin/virtualenvwrapper.sh'
+if [ -f ${VIRTUALENVSH} ]; then
+    [ -z ${WORKON_HOME} ] && export WORKON_HOME="${HOME}/.virtualenvs"
+    source ${VIRTUALENVSH}
+fi
+
 # set qemu:///system as default connection for virsh
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 
-[ -r ${HOME}/bin ] && PATH="$PATH:${HOME}/bin"
+[ -r ${HOME}/bin ] && PATH="${PATH}:${HOME}/bin"
 export PATH
 
 # include the z script
-[ -x ${HOME}/.z.sh ] && . $HOME/.z.sh
+[ -x ${HOME}/.z.sh ] && . ${HOME}/.z.sh
 
 hascmd dircolors && eval $(dircolors -b) # color setup for ls
 
