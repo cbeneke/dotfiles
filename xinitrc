@@ -20,7 +20,7 @@ fi
 
 type redshift >/dev/null && redshift -l 52.3:13.25 -m randr &
 type connman-ui-gtk >/dev/null && connman-ui-gtk &
-#type owncloud >/dev/null && owncloud &
+type owncloud >/dev/null && owncloud &
 type xcompmgr >/dev/null && xcompmgr &
 type urxvtd >/dev/null && urxvtd -f
 type unclutter >/dev/null && unclutter &
