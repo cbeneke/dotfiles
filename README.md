@@ -9,11 +9,12 @@ unconditonally. To check, what the script will do, use the `--pretend` switch.
 Used programs
 ---
 - awesome WM
-- zsh
-- terminus-font
 - neovim
-- vimpager
+- terminus-font
 - tmux
+- vimpager
+- wqi-zenhai
+- zsh
 
 Usage
 ---
