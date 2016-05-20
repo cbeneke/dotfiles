@@ -415,6 +415,7 @@ zstyle ':completion:*:sudo:*' command-path  /usr/local/sbin \
                                             /sbin           \
                                             /bin
 
+
 # run rehash on completion so new installed program are found automatically:
 _force_rehash() {
     (( CURRENT == 1 )) && rehash
@@ -464,6 +465,7 @@ alias c='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
 
 alias si='sudo su'
 alias :q='exit'
