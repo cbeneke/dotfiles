@@ -11,7 +11,7 @@ main()
 
   # Update dotfiles in home
   vprintf ${GREEN} "\ndotfiles in ${path}"
-  for file in `ls ${path} | grep -vE "README\.md|deploy\.sh|config"`; do
+  for file in `ls ${path} | grep -vE "PACKAGES\.lst|README\.md|deploy\.sh|config"`; do
     link ${path}/${file} ${HOME}/.${file} ${VERBOSE}
   done
 
