@@ -1,5 +1,6 @@
 base
 base-devel
+alsa-utils
 awesome
 chromium
 htop
