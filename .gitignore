@@ -1,4 +1,4 @@
 ssh/*
-vim/.netrwhist
+nvim/.netrwhist
 *.swp
 config/nvim/nvimundo
