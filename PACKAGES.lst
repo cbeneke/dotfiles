@@ -5,6 +5,7 @@ awesome
 chromium
 htop
 neovim
+pwgen
 redshift
 rxvt-unicode
 slim
@@ -15,6 +16,7 @@ tree
 ttf-anonymous-pro
 ttf-hannom
 unclutter
+wget
 wqy-zenhei
 xcompmgr
 xorg-server
