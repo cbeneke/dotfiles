@@ -465,7 +465,7 @@ alias c='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-
+alias rm='rm -i'
 
 alias si='sudo su'
 alias :q='exit'
