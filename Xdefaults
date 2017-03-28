@@ -3,9 +3,11 @@ URxvt*title:              Terminal
 URxvt*background:         black
 URxvt*foreground:         grey
 URxvt*scrollBar:          false
-URxvt.saveLines:          10000
+URxvt*saveLines:          10000
 URxvt*termName:           rxvt-unicode
-URxvt.font:               xft:Terminus:pixelsize=12,xft:WenQuanYi Zen Hei-12;antialias=True
+!URxvt*font:               xft:Terminus:pixelsize=12,xft:WenQuanYi Zen Hei-12;antialias=True
+URxvt*font:               -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
+
 
 !   ======   Transp   ======
 URxvt*depth:              32
@@ -13,6 +15,6 @@ URxvt*background:         [90]#000000
 
 !   ====== URL-match  ======
 URxvt*urlLauncher:        /usr/bin/chromium
-URxvt.perl-ext-common:    default,matcher
-URxvt.matcher.button:     1
-URxvt.matcher.pattern.1:  \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt*perl-ext-common:    default,matcher
+URxvt*matcher.button:     1
+URxvt*matcher.pattern.1:  \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
