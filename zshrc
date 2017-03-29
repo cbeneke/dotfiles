@@ -1,7 +1,5 @@
 ################################################################################
 #{{{ TODOS
-#   git functionality
-#
 #
 #}}}
 #{{{ helper functions
@@ -15,17 +13,18 @@ mkcd() {
     mkdir $1 && cd $1
 }
 
-#function git_prompt() {
-#    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref=$(git rev-parse --short HEAD 2>/dev/null)
-#    if [[ -n "$ref" ]]; then
-#        echo "( git ) "
-#    fi
-#}
 
 ################################################################################
 #}}}
 #{{{ environment for external tools
 ################################################################################
+
+# include zsh-git-prompt
+[ -z ${ZSH_GIT_SH} ] && export ZSH_GIT_SH="${HOME}/.config/zsh-git-prompt/zshrc.sh"
+if [ -f ${ZSH_GIT_SH} ]; then
+    [ -z ${ZSH_THEME_GIT_PROMPT_CACHE} ] && export ZSH_THEME_GIT_PROMPT_CACHE=1
+    source ${ZSH_GIT_SH}
+fi
 
 # include virtualenvwrapper
 [ -z ${VIRTUALENVSH} ] && export VIRTUALENVSH='/usr/bin/virtualenvwrapper.sh'
@@ -132,10 +131,8 @@ setopt correct              # try to correct typos
 ################################################################################
 
 # exit code on the left if != 0, red username for root, green otherwise
-#PROMPT="%(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b $(git_prompt)
-#%(!.#.$) "
-PROMPT="%{%B%F{gray}%}%D{%H:%M}%b %(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b
-%(!.#.$) "
+PROMPT='%{%B%F{gray}%}%D{%H:%M}%b %(!.%B%F{red}.%F{green})%B%n [%m]%b %{%B%F{white}%}%B%d%b $(git_super_status)
+%(!.#.$) '
 RPROMPT="%(?..%B%F{red}[%?]%b)"
 
 # printed when waiting for more input
