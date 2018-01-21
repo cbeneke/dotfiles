@@ -26,12 +26,13 @@ if [ $EUID -ne 0 ] ; then
     fi
     eval $(ssh-agent)
 
-    # start daemons and tools
+#    # start daemons and tools
     type urxvtd >/dev/null && urxvtd -f
-    type redshift >/dev/null && redshift -l 52.3:13.25 -m randr &
-    type connman-ui-gtk >/dev/null && connman-ui-gtk &
-    type xcompmgr >/dev/null && xcompmgr &
-    type unclutter >/dev/null && unclutter &
-    type nextcloud >/dev/null && nextcloud &
+#    type redshift >/dev/null && redshift -l 52.3:13.25 -m randr &
+#    type connman-ui-gtk >/dev/null && connman-ui-gtk &
+#    type xcompmgr >/dev/null && xcompmgr &
+#    type unclutter >/dev/null && unclutter &
+#    type nextcloud >/dev/null && nextcloud &
 fi
-exec awesome > .awesomeErrors
+#exec awesome > .awesomeErrors
+exec xfce4-session

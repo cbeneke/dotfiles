@@ -1,4 +1,4 @@
-ssh/*
+ssh
+nvimundo
 *.swp
-config/nvim/nvimundo
-config/nvim/.netrwhist
+*/.*

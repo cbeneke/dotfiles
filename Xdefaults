@@ -6,7 +6,7 @@ URxvt*scrollBar:          false
 URxvt*saveLines:          10000
 URxvt*termName:           rxvt-unicode
 !URxvt*font:               xft:Terminus:pixelsize=12,xft:WenQuanYi Zen Hei-12;antialias=True
-URxvt*font:               -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
+!URxvt*font:               -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
 
 
 !   ======   Transp   ======
