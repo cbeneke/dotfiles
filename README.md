@@ -1,3 +1,8 @@
+Disclaimer
+---
+This repository is obsolet (replaced with https://github.com/cbeneke/ansible-dotfiles) and will no longer be maintained. The configs will be outdated by time.
+
+
 Description
 ---
 This are the my dotfiles. The deploy script creates symlinks from your home to any file or
